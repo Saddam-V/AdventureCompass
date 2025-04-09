@@ -197,11 +197,13 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
+                    {/* Position tooltip based on orbit position to avoid overlapping with bottom button */}
+                    {/* For bottom orbits, show tooltip above; for top orbits, show below */}
                     {/* Background blur effect */}
                     <rect
                       x="50"
-                      y="95"
-                      width="100"
+                      y={index === 2 || index === 3 ? "60" : "95"}
+                      width="110"
                       height="40"
                       rx="8"
                       fill="rgba(15, 23, 42, 0.85)"
@@ -211,8 +213,8 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                     {/* Gradient border */}
                     <rect
                       x="50"
-                      y="95"
-                      width="100"
+                      y={index === 2 || index === 3 ? "60" : "95"}
+                      width="110"
                       height="40"
                       rx="8"
                       fill="none"
@@ -223,7 +225,7 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                     {/* Small decorative element */}
                     <circle
                       cx="63"
-                      cy="105"
+                      cy={index === 2 || index === 3 ? "70" : "105"}
                       r="4"
                       fill={atoms[index].color}
                       opacity="0.8"
@@ -232,10 +234,10 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                     {/* Content */}
                     <text
                       x="72"
-                      y="107"
+                      y={index === 2 || index === 3 ? "72" : "107"}
                       textAnchor="start"
                       fill="white"
-                      fontSize="9"
+                      fontSize="8"
                       fontWeight="bold"
                       letterSpacing="0.5"
                     >
@@ -243,10 +245,13 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                     </text>
                     <text
                       x="63"
-                      y="122"
+                      y={index === 2 || index === 3 ? "87" : "122"}
                       textAnchor="start"
                       fill="#94a3b8"
-                      fontSize="6.5"
+                      fontSize="6"
+                      style={{
+                        wordSpacing: "-1px"
+                      }}
                     >
                       {atoms[index].description}
                     </text>
