@@ -48,7 +48,7 @@ const ResearchCard = ({ area, delay }: ResearchCardProps) => {
         }}
       >
         <m.div 
-          className="flip-card-front absolute w-full h-full bg-secondary/20 backdrop-blur-sm rounded-lg p-8 flex flex-col backface-hidden"
+          className="flip-card-front absolute w-full h-full bg-slate-900/40 backdrop-blur-lg border border-indigo-500/20 rounded-lg p-8 flex flex-col backface-hidden shadow-lg shadow-indigo-500/10"
           style={{
             backfaceVisibility: "hidden",
           }}
@@ -57,18 +57,18 @@ const ResearchCard = ({ area, delay }: ResearchCardProps) => {
             transition: { duration: 0.8 },
           }}
         >
-          <div className="text-accent text-5xl mb-6">
-            <img src={area.iconSrc} alt={area.title} className="w-12 h-12" />
+          <div className="text-accent text-5xl mb-6 bg-slate-800/40 p-4 rounded-full w-16 h-16 flex items-center justify-center">
+            <img src={area.iconSrc} alt={area.title} className="w-10 h-10" />
           </div>
-          <h4 className="font-playfair text-2xl font-bold mb-4">{area.title}</h4>
+          <h4 className="font-playfair text-2xl font-bold mb-4 bg-gradient-to-r from-white to-indigo-200 bg-clip-text text-transparent">{area.title}</h4>
           <p className="text-gray-300 mb-6">{area.description}</p>
-          <div className="mt-auto text-sm text-accent">
-            <span>Click to discover more</span>
+          <div className="mt-auto text-sm text-accent bg-indigo-900/30 py-2 px-4 rounded-full self-start">
+            <span>Hover to discover more</span>
           </div>
         </m.div>
         
         <m.div 
-          className="flip-card-back absolute w-full h-full bg-accent/90 backdrop-blur-sm rounded-lg p-8 flex flex-col backface-hidden"
+          className="flip-card-back absolute w-full h-full bg-indigo-800/50 backdrop-blur-xl border border-white/10 rounded-lg p-8 flex flex-col backface-hidden shadow-lg shadow-purple-700/20"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
@@ -78,16 +78,16 @@ const ResearchCard = ({ area, delay }: ResearchCardProps) => {
             transition: { duration: 0.8 },
           }}
         >
-          <h4 className="font-playfair text-2xl font-bold mb-4">Key Contributions</h4>
-          <ul className="list-disc pl-5 space-y-2 text-gray-100">
+          <h4 className="font-playfair text-2xl font-bold mb-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Key Contributions</h4>
+          <ul className="list-disc pl-5 space-y-3 text-white/90">
             {area.contributions.map((contribution, index) => (
-              <li key={index}>{contribution}</li>
+              <li key={index} className="backdrop-blur-sm bg-indigo-700/20 rounded-md p-2">{contribution}</li>
             ))}
           </ul>
           <div className="mt-auto">
-            <a href="#publications" className="inline-flex items-center text-white hover:underline">
+            <a href="#publications" className="inline-flex items-center bg-white/10 hover:bg-white/20 py-2 px-4 rounded-full transition-all duration-300 text-white group">
               <span className="mr-2">Related Publications</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </a>

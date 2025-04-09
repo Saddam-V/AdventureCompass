@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { m, useAnimation } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import ResearchCard from "@/components/ResearchCard";
-import BrainModel3D from "@/components/BrainModel3D";
+import AtomicModel3D from "@/components/AtomicModel3D";
+import DynamicBackground from "@/components/DynamicBackground";
 import { researchAreas } from "@/lib/data";
 
 const pageVariants = {
@@ -58,7 +59,7 @@ const Research = () => {
       animate={controls}
       exit="exit"
       variants={pageVariants}
-      className="relative py-24 md:py-32 bg-primary text-white clip-path-polygon"
+      className="relative py-24 md:py-32 min-h-screen text-white overflow-hidden"
     >
       <div className="container mx-auto px-6 relative z-10">
         <m.div 
@@ -88,15 +89,15 @@ const Research = () => {
           className="w-full h-96 mb-20 rounded-lg overflow-hidden shadow-2xl relative perspective-1000"
         >
           {showModel ? (
-            <BrainModel3D className="w-full h-full" />
+            <AtomicModel3D className="w-full h-full" />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gray-900">
-              <div className="animate-pulse text-gray-400">Loading 3D Brain Model...</div>
+              <div className="animate-pulse text-gray-400">Loading 3D Model...</div>
             </div>
           )}
           <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent text-center">
-            <h3 className="text-2xl font-bold text-white">Interactive Brain Model</h3>
-            <p className="text-gray-300 text-sm">Click and drag to rotate - Scroll to zoom</p>
+            <h3 className="text-2xl font-bold text-white">Interactive Atomic Model</h3>
+            <p className="text-gray-300 text-sm">Hover to interact with elements</p>
           </div>
         </m.div>
         
@@ -127,13 +128,8 @@ const Research = () => {
         </m.div>
       </div>
       
-      <div className="absolute top-0 left-0 w-full h-full opacity-10 mix-blend-overlay pointer-events-none">
-        <img 
-          src="https://images.unsplash.com/photo-1579546929662-711aa81148cf?w=1600&auto=format&fit=crop&q=80&ixlib=rb-4.0.3" 
-          alt="Abstract texture" 
-          className="w-full h-full object-cover"
-        />
-      </div>
+      {/* Dynamic background that responds to mouse movement */}
+      <DynamicBackground />
     </m.section>
   );
 };
