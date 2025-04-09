@@ -23,12 +23,12 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
   const rotateX = useTransform(springY, [0, 300], [15, -15]);
   const rotateY = useTransform(springX, [0, 300], [-15, 15]);
   
-  // Atoms data
+  // Atoms data with slightly shorter descriptions
   const atoms = [
-    { name: 'Consciousness', description: 'The nature of subjective experience and awareness', color: '#8b5cf6' },
-    { name: 'Knowledge', description: 'The structure and limits of human understanding', color: '#06b6d4' },
-    { name: 'Identity', description: 'The continuity of self through time and change', color: '#ec4899' },
-    { name: 'Ethics', description: 'Moral principles guiding AI development and use', color: '#10b981' }
+    { name: 'Consciousness', description: 'Subjective experience and awareness', color: '#8b5cf6' },
+    { name: 'Knowledge', description: 'Structure & limits of understanding', color: '#06b6d4' },
+    { name: 'Identity', description: 'Self continuity through time & change', color: '#ec4899' },
+    { name: 'Ethics', description: 'Moral principles in AI development', color: '#10b981' }
   ];
   
   // Orbit data (radius, rotation speed, start angle)
@@ -142,6 +142,49 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
               transform: 'translateZ(10px)'
             }}
           >
+            {/* Nucleus - Moved to the beginning so it appears behind everything else */}
+            <circle
+              cx="100"
+              cy="100"
+              r="15"
+              fill="url(#nucleus-gradient)"
+              style={{
+                filter: 'drop-shadow(0 0 10px rgba(236, 72, 153, 0.5))'
+              }}
+            />
+            
+            <m.circle
+              cx="100"
+              cy="100"
+              r="18"
+              fill="none"
+              stroke="rgba(236, 72, 153, 0.3)"
+              strokeWidth="1"
+              animate={{
+                r: [18, 25, 18],
+                opacity: [0.3, 0.1, 0.3]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                repeatType: "loop"
+              }}
+            />
+            
+            {/* Center text - only shown when no orbit is active */}
+            {activeOrbit === null && (
+              <text
+                x="100"
+                y="103"
+                textAnchor="middle"
+                fill="white"
+                fontSize="8"
+                fontWeight="bold"
+              >
+                MIND
+              </text>
+            )}
+            
             {/* Orbits */}
             {orbits.map((orbit, index) => (
               <g key={`orbit-${index}`}>
@@ -189,7 +232,7 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                   }}
                 />
                 
-                {/* Label for orbit when active */}
+                {/* Label for orbit when active - Now rendered last to appear on top of everything */}
                 {activeOrbit === index && (
                   <m.g
                     initial={{ opacity: 0 }}
@@ -197,22 +240,22 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    {/* Background blur effect */}
+                    {/* Background blur effect with increased width and z-index */}
                     <rect
-                      x="50"
+                      x="45"
                       y="95"
-                      width="100"
+                      width="120"
                       height="40"
                       rx="8"
-                      fill="rgba(15, 23, 42, 0.85)"
+                      fill="rgba(15, 23, 42, 0.95)"
                       filter="url(#blur-filter)"
                     />
                     
                     {/* Gradient border */}
                     <rect
-                      x="50"
+                      x="45"
                       y="95"
-                      width="100"
+                      width="120"
                       height="40"
                       rx="8"
                       fill="none"
@@ -222,7 +265,7 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                     
                     {/* Small decorative element */}
                     <circle
-                      cx="63"
+                      cx="58"
                       cy="105"
                       r="4"
                       fill={atoms[index].color}
@@ -231,24 +274,26 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                     
                     {/* Content */}
                     <text
-                      x="72"
+                      x="67"
                       y="107"
                       textAnchor="start"
                       fill="white"
-                      fontSize="9"
+                      fontSize="8"
                       fontWeight="bold"
                       letterSpacing="0.5"
                     >
                       {atoms[index].name.toUpperCase()}
                     </text>
                     <text
-                      x="63"
+                      x="58"
                       y="122"
                       textAnchor="start"
                       fill="#94a3b8"
-                      fontSize="6.5"
+                      fontSize="6"
                     >
-                      {atoms[index].description}
+                      {atoms[index].description.length > 35 
+                        ? atoms[index].description.substring(0, 35) + '...' 
+                        : atoms[index].description}
                     </text>
                     
                     {/* Define gradient for this label */}
@@ -262,49 +307,6 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                 )}
               </g>
             ))}
-            
-            {/* Nucleus */}
-            <circle
-              cx="100"
-              cy="100"
-              r="15"
-              fill="url(#nucleus-gradient)"
-              style={{
-                filter: 'drop-shadow(0 0 10px rgba(236, 72, 153, 0.5))'
-              }}
-            />
-            
-            <m.circle
-              cx="100"
-              cy="100"
-              r="18"
-              fill="none"
-              stroke="rgba(236, 72, 153, 0.3)"
-              strokeWidth="1"
-              animate={{
-                r: [18, 25, 18],
-                opacity: [0.3, 0.1, 0.3]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                repeatType: "loop"
-              }}
-            />
-            
-            {/* Center text - only shown when no orbit is active */}
-            {activeOrbit === null && (
-              <text
-                x="100"
-                y="103"
-                textAnchor="middle"
-                fill="white"
-                fontSize="8"
-                fontWeight="bold"
-              >
-                MIND
-              </text>
-            )}
             
             {/* Gradients and Filters */}
             <defs>
