@@ -155,13 +155,11 @@ const Research = () => {
                 </div>
                 
                 <div className="mt-8">
-                  <Link href="/publications">
-                    <a className="inline-flex items-center bg-gradient-to-r from-teal-500 to-indigo-600 hover:from-teal-600 hover:to-indigo-700 px-6 py-3 rounded-full text-white font-medium transition-all duration-300 shadow-lg shadow-indigo-600/20 group">
-                      <span>View Research Publications</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    </a>
+                  <Link href="/publications" className="inline-flex items-center bg-gradient-to-r from-teal-500 to-indigo-600 hover:from-teal-600 hover:to-indigo-700 px-6 py-3 rounded-full text-white font-medium transition-all duration-300 shadow-lg shadow-indigo-600/20 group">
+                    <span>View Research Publications</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
                   </Link>
                 </div>
               </div>
