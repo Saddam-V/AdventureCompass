@@ -197,35 +197,67 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
+                    {/* Background blur effect */}
                     <rect
-                      x="70"
+                      x="50"
                       y="95"
-                      width="60"
-                      height="30"
-                      rx="5"
-                      fill="rgba(15, 23, 42, 0.8)"
-                      stroke={atoms[index].color}
-                      strokeWidth="1"
+                      width="100"
+                      height="40"
+                      rx="8"
+                      fill="rgba(15, 23, 42, 0.85)"
+                      filter="url(#blur-filter)"
                     />
+                    
+                    {/* Gradient border */}
+                    <rect
+                      x="50"
+                      y="95"
+                      width="100"
+                      height="40"
+                      rx="8"
+                      fill="none"
+                      stroke={`url(#gradient-stroke-${index})`}
+                      strokeWidth="1.5"
+                    />
+                    
+                    {/* Small decorative element */}
+                    <circle
+                      cx="63"
+                      cy="105"
+                      r="4"
+                      fill={atoms[index].color}
+                      opacity="0.8"
+                    />
+                    
+                    {/* Content */}
                     <text
-                      x="100"
-                      y="105"
-                      textAnchor="middle"
+                      x="72"
+                      y="107"
+                      textAnchor="start"
                       fill="white"
-                      fontSize="8"
+                      fontSize="9"
                       fontWeight="bold"
+                      letterSpacing="0.5"
                     >
-                      {atoms[index].name}
+                      {atoms[index].name.toUpperCase()}
                     </text>
                     <text
-                      x="100"
-                      y="118"
-                      textAnchor="middle"
+                      x="63"
+                      y="122"
+                      textAnchor="start"
                       fill="#94a3b8"
-                      fontSize="6"
+                      fontSize="6.5"
                     >
                       {atoms[index].description}
                     </text>
+                    
+                    {/* Define gradient for this label */}
+                    <defs>
+                      <linearGradient id={`gradient-stroke-${index}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor={atoms[index].color} stopOpacity="0.7" />
+                        <stop offset="100%" stopColor="#0f172a" stopOpacity="0.1" />
+                      </linearGradient>
+                    </defs>
                   </m.g>
                 )}
               </g>
@@ -260,24 +292,32 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
               }}
             />
             
-            {/* Center text */}
-            <text
-              x="100"
-              y="103"
-              textAnchor="middle"
-              fill="white"
-              fontSize="8"
-              fontWeight="bold"
-            >
-              MIND
-            </text>
+            {/* Center text - only shown when no orbit is active */}
+            {activeOrbit === null && (
+              <text
+                x="100"
+                y="103"
+                textAnchor="middle"
+                fill="white"
+                fontSize="8"
+                fontWeight="bold"
+              >
+                MIND
+              </text>
+            )}
             
-            {/* Gradients */}
+            {/* Gradients and Filters */}
             <defs>
               <radialGradient id="nucleus-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                 <stop offset="0%" stopColor="#ec4899" stopOpacity="1" />
                 <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.8" />
               </radialGradient>
+              
+              {/* Blur filter for tooltip backgrounds */}
+              <filter id="blur-filter" x="-10%" y="-10%" width="120%" height="120%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
             </defs>
           </svg>
         </div>
