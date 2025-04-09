@@ -1,0 +1,146 @@
+import { useRef, useState } from 'react';
+import { m, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { Link } from 'wouter';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+
+const CallToAction = () => {
+  const [ref, inView] = useScrollAnimation(0.2);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  
+  // Motion values for mouse position
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  // Spring animations for smoother movement
+  const springX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+  
+  // Transform for the spotlight effect
+  const spotlightX = useTransform(springX, [-300, 300], ['0%', '100%']);
+  const spotlightY = useTransform(springY, [-300, 300], ['0%', '100%']);
+  
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      // Calculate position relative to center
+      const x = e.clientX - rect.left - centerX;
+      const y = e.clientY - rect.top - centerY;
+      
+      setMousePosition({ x, y });
+      mouseX.set(x);
+      mouseY.set(y);
+    }
+  };
+  
+  return (
+    <section className="py-20 bg-neutral overflow-hidden">
+      <div className="container mx-auto px-6">
+        <m.div
+          ref={ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div 
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            className="relative rounded-2xl overflow-hidden"
+          >
+            <m.div 
+              className="absolute inset-0 bg-gradient-to-r from-primary-dark to-primary"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            />
+            
+            {/* Spotlight effect */}
+            <m.div 
+              className="absolute inset-0 opacity-30 pointer-events-none" 
+              style={{
+                background: 'radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 50%)',
+                backgroundPosition: `${spotlightX.get()}% ${spotlightY.get()}%`,
+                backgroundSize: '100% 100%',
+              }}
+            />
+            
+            {/* Animated shapes */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <m.div
+                className="absolute w-64 h-64 rounded-full bg-accent/20 blur-3xl"
+                animate={{
+                  x: [mousePosition.x * 0.2 - 100, mousePosition.x * 0.2 - 100],
+                  y: [mousePosition.y * 0.2 - 100, mousePosition.y * 0.2 - 100],
+                }}
+                transition={{ duration: 0.8 }}
+              />
+              <m.div
+                className="absolute w-64 h-64 rounded-full bg-secondary/20 blur-3xl"
+                animate={{
+                  x: [mousePosition.x * 0.1 + 200, mousePosition.x * 0.1 + 200],
+                  y: [mousePosition.y * 0.1 + 100, mousePosition.y * 0.1 + 100],
+                }}
+                transition={{ duration: 0.8 }}
+              />
+            </div>
+            
+            <div className="relative z-10 py-24 px-12 text-center">
+              <m.h2 
+                className="text-4xl md:text-5xl font-bold text-white font-playfair mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                Interested in <span className="text-accent">Collaboration</span>?
+              </m.h2>
+              
+              <m.p 
+                className="text-xl text-gray-200 max-w-2xl mx-auto mb-12"
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                Whether you're a researcher, student, or institution, I welcome 
+                opportunities to explore philosophical questions together.
+              </m.p>
+              
+              <m.div
+                className="flex flex-col sm:flex-row gap-4 justify-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                <Link href="/contact">
+                  <m.a
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-block px-8 py-4 bg-accent hover:bg-accent/90 text-white font-semibold rounded-full transition-all shadow-lg hover:shadow-xl magnetic"
+                    data-cursor-text="Get in Touch"
+                  >
+                    Contact Me
+                  </m.a>
+                </Link>
+                
+                <Link href="/publications">
+                  <m.a
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-block px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white/10 font-semibold rounded-full transition-all shadow-lg hover:shadow-xl magnetic"
+                    data-cursor-text="View Research"
+                  >
+                    View My Research
+                  </m.a>
+                </Link>
+              </m.div>
+            </div>
+          </div>
+        </m.div>
+      </div>
+    </section>
+  );
+};
+
+export default CallToAction;

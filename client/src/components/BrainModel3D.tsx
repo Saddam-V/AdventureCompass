@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+// @ts-ignore - OrbitControls is part of three.js examples
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 interface BrainModel3DProps {
