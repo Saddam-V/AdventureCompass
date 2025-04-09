@@ -132,7 +132,7 @@ const AtomicModel3D: React.FC<AtomicModel3DProps> = ({ className = '' }) => {
         <div className="absolute bottom-1/4 right-1/4 w-32 h-32 rounded-full bg-teal-500/20 blur-3xl"></div>
         
         {/* Atomic model with SVG */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center z-10">
           <svg 
             ref={svgRef}
             viewBox="0 0 200 200" 
