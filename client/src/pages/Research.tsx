@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { m, useAnimation } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { m, useAnimation, motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import ResearchCard from "@/components/ResearchCard";
 import AtomicModel3D from "@/components/AtomicModel3D";
 import DynamicBackground from "@/components/DynamicBackground";
 import { researchAreas } from "@/lib/data";
+import { Link } from "wouter";
 
 const pageVariants = {
   initial: {
@@ -15,7 +15,7 @@ const pageVariants = {
     transition: {
       duration: 0.5,
       when: "beforeChildren",
-      staggerChildren: 0.2,
+      staggerChildren: 0.15,
     },
   },
   exit: {
@@ -31,17 +31,16 @@ const itemVariants = {
   enter: { 
     y: 0, 
     opacity: 1,
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }
   },
 };
 
 const Research = () => {
   const controls = useAnimation();
   const [headingRef, headingInView] = useScrollAnimation();
-  const [buttonRef, buttonInView] = useScrollAnimation();
-  const [brainModelRef, brainModelInView] = useScrollAnimation();
   const [showModel, setShowModel] = useState(false);
-
+  const [activeArea, setActiveArea] = useState<number | null>(null);
+  
   useEffect(() => {
     controls.start("enter");
     // Delay loading the 3D model to improve page load performance
@@ -59,77 +58,271 @@ const Research = () => {
       animate={controls}
       exit="exit"
       variants={pageVariants}
-      className="relative py-24 md:py-32 min-h-screen text-white overflow-hidden"
+      className="relative py-20 md:py-24 min-h-screen text-white overflow-hidden"
     >
+      {/* Dynamic background that responds to mouse movement */}
+      <DynamicBackground />
+      
       <div className="container mx-auto px-6 relative z-10">
         <m.div 
           ref={headingRef}
           variants={itemVariants}
           initial="initial"
           animate={headingInView ? "enter" : "initial"}
-          className="text-center max-w-3xl mx-auto mb-20"
+          className="text-center max-w-3xl mx-auto mb-16"
         >
-          <h2 className="font-montserrat text-lg text-accent uppercase tracking-widest mb-2">Research Areas</h2>
-          <h3 className="font-playfair text-4xl md:text-5xl font-bold mb-6">
+          <m.span 
+            className="inline-block px-4 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-sm font-medium mb-4 backdrop-blur-sm border border-indigo-500/20"
+            variants={itemVariants}
+            custom={1}
+          >
+            Research Focus
+          </m.span>
+          <m.h1 
+            className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold mb-8"
+            variants={itemVariants}
+            custom={2}
+          >
             Exploring the Frontier of{" "}
-            <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-teal-400 to-indigo-400 bg-clip-text text-transparent">
               Mind & Knowledge
             </span>
-          </h3>
-          <p className="text-gray-300">
-            My research spans multiple disciplines, focusing on how we understand intelligence, both natural and artificial, and what this reveals about the nature of knowledge itself.
-          </p>
+          </m.h1>
+          <m.p 
+            className="text-lg text-gray-300 max-w-2xl mx-auto"
+            variants={itemVariants}
+            custom={3}
+          >
+            My research spans multiple disciplines, focusing on how we understand intelligence, both natural and artificial, 
+            and what this reveals about the nature of knowledge itself.
+          </m.p>
         </m.div>
         
+        {/* Featured Research Visualization */}
         <m.div
-          ref={brainModelRef}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={brainModelInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full h-96 mb-20 rounded-lg overflow-hidden shadow-2xl relative perspective-1000"
+          variants={itemVariants}
+          custom={4}
+          className="mb-20 md:mb-28"
         >
-          {showModel ? (
-            <AtomicModel3D className="w-full h-full" />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-900">
-              <div className="animate-pulse text-gray-400">Loading 3D Model...</div>
+          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="order-2 lg:order-1">
+              <div className="bg-slate-900/40 backdrop-blur-md rounded-2xl p-8 border border-indigo-500/20 shadow-xl">
+                <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-teal-300 to-blue-400 bg-clip-text text-transparent">
+                  Interdisciplinary Approach
+                </h3>
+                <p className="text-gray-300 mb-6">
+                  My research bridges the gap between philosophy of mind, cognitive science, and artificial intelligence, 
+                  creating a unified framework for understanding consciousness and cognition.
+                </p>
+                
+                <div className="space-y-4">
+                  {researchAreas.map((area, index) => (
+                    <div 
+                      key={area.id}
+                      className={`p-4 rounded-lg transition-all duration-300 cursor-pointer ${
+                        activeArea === index 
+                          ? 'bg-indigo-600/30 border border-indigo-500/40' 
+                          : 'bg-slate-800/50 border border-slate-700/30 hover:bg-slate-800/80'
+                      }`}
+                      onClick={() => setActiveArea(activeArea === index ? null : index)}
+                    >
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600/80 to-indigo-900/80 flex items-center justify-center mr-4">
+                          <img src={area.iconSrc} alt={area.title} className="w-5 h-5" />
+                        </div>
+                        <h4 className="font-semibold text-lg">{area.title}</h4>
+                      </div>
+                      
+                      {activeArea === index && (
+                        <m.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pl-14"
+                        >
+                          <p className="text-gray-300 mb-3">{area.description}</p>
+                          <h5 className="font-semibold text-indigo-300 mb-2">Key Contributions:</h5>
+                          <ul className="list-disc pl-5 space-y-1 text-gray-300">
+                            {area.contributions.map((contribution, i) => (
+                              <li key={i}>{contribution}</li>
+                            ))}
+                          </ul>
+                        </m.div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-8">
+                  <Link href="/publications">
+                    <a className="inline-flex items-center bg-gradient-to-r from-teal-500 to-indigo-600 hover:from-teal-600 hover:to-indigo-700 px-6 py-3 rounded-full text-white font-medium transition-all duration-300 shadow-lg shadow-indigo-600/20 group">
+                      <span>View Research Publications</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </a>
+                  </Link>
+                </div>
+              </div>
             </div>
-          )}
-          <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent text-center">
-            <h3 className="text-2xl font-bold text-white">Interactive Atomic Model</h3>
-            <p className="text-gray-300 text-sm">Hover to interact with elements</p>
+            
+            <m.div
+              className="order-1 lg:order-2 h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              {showModel ? (
+                <AtomicModel3D className="w-full h-full" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-slate-900/60 backdrop-blur-md">
+                  <div className="animate-pulse text-gray-400 flex flex-col items-center">
+                    <svg className="animate-spin h-8 w-8 mb-2 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Loading 3D Model...
+                  </div>
+                </div>
+              )}
+              
+              {/* Glass effect caption */}
+              <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-slate-900/90 via-slate-900/70 to-transparent backdrop-blur-sm">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Interactive Atomic Model</h3>
+                    <p className="text-gray-300 text-sm">Hover to interact with elements</p>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs">
+                    Visualization
+                  </div>
+                </div>
+              </div>
+            </m.div>
           </div>
         </m.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {researchAreas.map((area, index) => (
-            <ResearchCard 
-              key={area.id}
-              area={area}
-              delay={0.2 + (index * 0.2)}
-            />
-          ))}
-        </div>
-        
-        <m.div 
-          ref={buttonRef}
+        {/* Research Impact Section */}
+        <m.div
           variants={itemVariants}
-          initial="initial"
-          animate={buttonInView ? "enter" : "initial"}
-          className="mt-16 text-center"
+          custom={5}
+          className="mb-16"
+        >
+          <div className="bg-gradient-to-br from-slate-900/80 to-indigo-950/80 backdrop-blur-md rounded-2xl p-8 border border-indigo-500/20 shadow-xl">
+            <div className="flex flex-col md:flex-row md:items-center mb-8">
+              <div className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+                <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-300 to-pink-400 bg-clip-text text-transparent">
+                  Research Impact & Applications
+                </h3>
+                <p className="text-gray-300">
+                  My work contributes to both theoretical understanding and practical applications in AI ethics, 
+                  cognitive enhancement, and the development of more human-centered technology.
+                </p>
+              </div>
+              <div className="md:w-1/2 grid grid-cols-2 gap-4">
+                <div className="rounded-lg bg-indigo-900/30 backdrop-blur-sm p-4 border border-indigo-500/20">
+                  <div className="text-3xl font-bold text-teal-400 mb-1">15+</div>
+                  <div className="text-gray-300 text-sm">Published Papers</div>
+                </div>
+                <div className="rounded-lg bg-indigo-900/30 backdrop-blur-sm p-4 border border-indigo-500/20">
+                  <div className="text-3xl font-bold text-purple-400 mb-1">8</div>
+                  <div className="text-gray-300 text-sm">Research Collaborations</div>
+                </div>
+                <div className="rounded-lg bg-indigo-900/30 backdrop-blur-sm p-4 border border-indigo-500/20">
+                  <div className="text-3xl font-bold text-pink-400 mb-1">4</div>
+                  <div className="text-gray-300 text-sm">Patents Filed</div>
+                </div>
+                <div className="rounded-lg bg-indigo-900/30 backdrop-blur-sm p-4 border border-indigo-500/20">
+                  <div className="text-3xl font-bold text-blue-400 mb-1">12</div>
+                  <div className="text-gray-300 text-sm">Speaking Engagements</div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Horizontal divider */}
+            <div className="border-t border-indigo-500/20 my-6"></div>
+            
+            {/* Key findings */}
+            <h4 className="text-xl font-semibold mb-4 text-white">Key Research Findings</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                </div>
+                <div>
+                  <h5 className="font-medium text-white mb-1">Neural Correlates of Consciousness</h5>
+                  <p className="text-gray-300 text-sm">Identified specific neural patterns associated with different states of awareness and self-reflection.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <h5 className="font-medium text-white mb-1">AI Alignment Frameworks</h5>
+                  <p className="text-gray-300 text-sm">Developed ethical frameworks for ensuring AI systems remain aligned with human values and intentions.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 rounded-full bg-pink-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h5 className="font-medium text-white mb-1">Cognitive Enhancement</h5>
+                  <p className="text-gray-300 text-sm">Researched responsible methods for enhancing human cognitive capabilities through technology-human interfaces.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h5 className="font-medium text-white mb-1">Human-AI Collaboration</h5>
+                  <p className="text-gray-300 text-sm">Explored optimal models for human-AI collaborative systems that leverage the strengths of both intelligences.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </m.div>
+        
+        {/* Call to Action */}
+        <m.div 
+          variants={itemVariants}
+          custom={6}
+          className="text-center mt-20"
         >
           <a 
             href="#contact" 
-            className="inline-block px-8 py-3 bg-accent hover:bg-opacity-90 text-white font-montserrat tracking-wide transition-all duration-300 transform hover:-translate-y-1 rounded magnetic"
-            data-cursor-text="Let's Work Together"
+            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium text-lg rounded-full shadow-xl shadow-indigo-700/20 transition-all duration-300 transform hover:-translate-y-1 magnetic group"
+            data-cursor-text="Let's Connect"
           >
-            Collaborate on Research
+            <span className="mr-2">Collaborate on Research</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </a>
+          
+          <m.p 
+            className="text-gray-400 mt-6 text-sm"
+            variants={itemVariants}
+            custom={7}
+          >
+            Interested in exploring research opportunities? Let's connect and discuss potential collaborations.
+          </m.p>
         </m.div>
       </div>
-      
-      {/* Dynamic background that responds to mouse movement */}
-      <DynamicBackground />
     </m.section>
   );
 };
