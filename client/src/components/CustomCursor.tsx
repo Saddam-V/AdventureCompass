@@ -166,6 +166,12 @@ const CustomCursor = () => {
     document.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("mousedown", onMouseDown);
     document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("touchstart", () => {
+      // For devices with both touch and mouse support
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        setHidden(true); // Hide cursor on touch-enabled mobile devices
+      }
+    });
     window.addEventListener("scroll", refreshMagneticElements);
     window.addEventListener("resize", refreshMagneticElements);
     
@@ -208,6 +214,11 @@ const CustomCursor = () => {
       document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mousedown", onMouseDown);
       document.removeEventListener("mouseup", onMouseUp);
+      document.removeEventListener("touchstart", () => {
+        if (window.matchMedia('(max-width: 768px)').matches) {
+          setHidden(true);
+        }
+      });
       window.removeEventListener("scroll", refreshMagneticElements);
       window.removeEventListener("resize", refreshMagneticElements);
     };
@@ -337,8 +348,40 @@ const CustomCursor = () => {
             cursor: auto;
           }
           
-          a, button, [role=button], .clickable {
+          a, button, [role=button], .clickable, .magnetic {
             cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Remove default mobile tap highlight */
+            position: relative; /* For positioning the tooltip */
+          }
+          
+          /* Add tap effect for interactive elements on mobile */
+          a:active, button:active, [role=button]:active, .clickable:active, .magnetic:active {
+            transform: scale(0.97);
+            transition: transform 0.2s ease-in-out;
+          }
+          
+          /* Show touch-specific action hints for mobile */
+          [data-cursor-text]::before {
+            content: attr(data-cursor-text);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(5px);
+            background-color: var(--accent);
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            opacity: 0;
+            pointer-events: none;
+            white-space: nowrap;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+          }
+          
+          [data-cursor-text]:active::before {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-8px);
           }
         }
       `}</style>

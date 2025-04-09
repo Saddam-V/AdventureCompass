@@ -67,12 +67,43 @@ const FloatingCard3D = ({
     mouseY.set(y);
   };
   
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!cardRef.current || e.touches.length === 0) return;
+    
+    // Prevent scrolling while touching the card
+    e.preventDefault();
+    
+    // Get dimensions if not already set
+    if (dimensions.width === 0) {
+      const rect = cardRef.current.getBoundingClientRect();
+      setDimensions({ width: rect.width, height: rect.height });
+    }
+    
+    // Calculate touch position relative to card
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.touches[0].clientX - rect.left;
+    const y = e.touches[0].clientY - rect.top;
+    
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+  
   const handleMouseEnter = () => {
     if (!cardRef.current) return;
     
     setIsHovered(true);
     
     // Set dimensions when mouse enters
+    const rect = cardRef.current.getBoundingClientRect();
+    setDimensions({ width: rect.width, height: rect.height });
+  };
+  
+  const handleTouchStart = () => {
+    if (!cardRef.current) return;
+    
+    setIsHovered(true);
+    
+    // Set dimensions when touch starts
     const rect = cardRef.current.getBoundingClientRect();
     setDimensions({ width: rect.width, height: rect.height });
   };
@@ -85,6 +116,17 @@ const FloatingCard3D = ({
     mouseY.set(dimensions.height / 2);
   };
   
+  const handleTouchEnd = () => {
+    // Add a small delay before removing hover effect for a better user experience
+    setTimeout(() => {
+      setIsHovered(false);
+      
+      // Reset to center position
+      mouseX.set(dimensions.width / 2);
+      mouseY.set(dimensions.height / 2);
+    }, 150);
+  };
+  
   return (
     <m.div
       ref={cardRef}
@@ -92,6 +134,9 @@ const FloatingCard3D = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onTouchMove={handleTouchMove}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       style={{
         perspective: '1000px',
         transformStyle: 'preserve-3d',

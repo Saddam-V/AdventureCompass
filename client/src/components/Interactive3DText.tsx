@@ -75,6 +75,27 @@ const Interactive3DText = ({
       mouseY.set(y);
     }
   };
+  
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (containerRef.current && e.touches.length > 0) {
+      e.preventDefault(); // Prevent scrolling while touching the element
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      const y = e.touches[0].clientY - rect.top;
+      
+      setMousePosition({ x, y });
+      mouseX.set(x);
+      mouseY.set(y);
+      
+      // Ensure hover state is active on touch
+      setIsHovered(true);
+    }
+  };
+  
+  const handleTouchEnd = () => {
+    // Keep hover state for a moment before removing it
+    setTimeout(() => setIsHovered(false), 500);
+  };
 
   // Generate layers for 3D effect
   const textLayers = Array.from({ length: layers }).map((_, index) => {
@@ -106,6 +127,9 @@ const Interactive3DText = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchStart={() => setIsHovered(true)}
       style={{
         perspective: '1000px'
       }}

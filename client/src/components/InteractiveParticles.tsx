@@ -63,6 +63,25 @@ const InteractiveParticles = ({
       }
     };
     
+    // Define event handlers that we can reference for both adding and removing
+    const handleTouchStart = (e: TouchEvent) => {
+      if (!canvasRef.current || e.touches.length === 0) return;
+      
+      const rect = canvasRef.current.getBoundingClientRect();
+      mouseRef.current = {
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top,
+        isActive: true
+      };
+    };
+    
+    const handleTouchEnd = () => {
+      // Keep interaction active briefly for better experience
+      setTimeout(() => {
+        mouseRef.current.isActive = false;
+      }, 300);
+    };
+    
     updateDimensions();
     
     // Initialize particles
@@ -75,8 +94,9 @@ const InteractiveParticles = ({
       canvasRef.current.addEventListener('mousemove', handleMouseMove);
       canvasRef.current.addEventListener('mouseleave', handleMouseLeave);
       canvasRef.current.addEventListener('mouseenter', handleMouseEnter);
-      canvasRef.current.addEventListener('touchmove', handleTouchMove);
-      canvasRef.current.addEventListener('touchend', handleMouseLeave);
+      canvasRef.current.addEventListener('touchmove', handleTouchMove, { passive: false });
+      canvasRef.current.addEventListener('touchstart', handleTouchStart);
+      canvasRef.current.addEventListener('touchend', handleTouchEnd);
     }
     
     // Start animation
@@ -91,7 +111,8 @@ const InteractiveParticles = ({
         canvasRef.current.removeEventListener('mouseleave', handleMouseLeave);
         canvasRef.current.removeEventListener('mouseenter', handleMouseEnter);
         canvasRef.current.removeEventListener('touchmove', handleTouchMove);
-        canvasRef.current.removeEventListener('touchend', handleMouseLeave);
+        canvasRef.current.removeEventListener('touchstart', handleTouchStart);
+        canvasRef.current.removeEventListener('touchend', handleTouchEnd);
       }
       
       if (animationRef.current) {
