@@ -7,6 +7,7 @@ import StatsSection from "@/components/StatsSection";
 import CallToAction from "@/components/CallToAction";
 import Interactive3DText from "@/components/Interactive3DText";
 import InteractiveParticles from "@/components/InteractiveParticles";
+import BrainModel3D from "@/components/BrainModel3D";
 import { Link } from "wouter";
 
 const pageVariants = {
@@ -78,8 +79,8 @@ const Home = () => {
                   className="h-[100px] mb-8"
                   textClassName="text-4xl md:text-5xl font-bold font-playfair"
                   depth={30}
-                  layers={8}
-                  color="#ffffff"
+                  layers={10}
+                  color="#6366f1"
                   highlightColor="#ec4899"
                 />
                 <Interactive3DText 
@@ -87,8 +88,8 @@ const Home = () => {
                   className="h-[100px] mb-8"
                   textClassName="text-4xl md:text-5xl font-bold font-playfair"
                   depth={30}
-                  layers={8}
-                  color="#ffffff"
+                  layers={10}
+                  color="#a855f7"
                   highlightColor="#10b981"
                   spring={{ stiffness: 250, damping: 25 }}
                 />
@@ -97,8 +98,8 @@ const Home = () => {
                   className="h-[100px]"
                   textClassName="text-4xl md:text-5xl font-bold font-playfair"
                   depth={30}
-                  layers={8}
-                  color="#ffffff"
+                  layers={10}
+                  color="#14b8a6"
                   highlightColor="#4f46e5"
                   spring={{ stiffness: 150, damping: 20 }}
                 />
@@ -106,53 +107,41 @@ const Home = () => {
             </div>
             
             <div className="order-1 md:order-2 relative">
-              <div className="h-full w-full flex justify-center items-center">
+              <m.div 
+                className="h-[400px] md:h-[500px] relative rounded-2xl overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
                 <div className="absolute inset-0 z-0 rounded-2xl overflow-hidden">
                   {showParticles && (
                     <InteractiveParticles 
                       className="w-full h-full"
-                      particleCount={60}
+                      particleCount={40}
                       interactionRadius={100}
                       particleColors={['#22d3ee', '#a78bfa', '#fb7185', '#34d399', '#f472b6']}
                       backgroundColor="rgba(15, 23, 42, 0.7)"
                     />
                   )}
                 </div>
-                <div className="relative z-10 p-10 bg-gradient-to-br from-slate-800/80 to-indigo-900/80 rounded-2xl backdrop-blur-md shadow-2xl border border-slate-700/50 w-full">
-                  <m.h3 
-                    className="text-3xl md:text-4xl font-bold mb-6 text-white font-playfair"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7 }}
-                  >
-                    Where <span className="text-teal-400">Philosophy</span> Meets <span className="text-purple-400">Innovation</span>
-                  </m.h3>
-                  <m.p 
-                    className="text-gray-200 mb-8 max-w-lg"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.1 }}
-                  >
-                    My research builds bridges between philosophical inquiry and technological advancement, examining how AI transforms our understanding of consciousness, knowledge, and what it means to be human.
-                  </m.p>
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                  >
-                    <Link href="/research">
-                      <m.a
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="inline-block px-8 py-4 bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-600 hover:to-teal-500 rounded-full font-semibold text-white shadow-lg transition-all duration-300"
-                        data-cursor-text="Explore"
-                      >
-                        Explore My Research
-                      </m.a>
-                    </Link>
-                  </m.div>
+                
+                {/* Interactive 3D Brain Model */}
+                <BrainModel3D className="h-full" />
+                
+                {/* Caption */}
+                <div className="absolute bottom-4 left-0 right-0 text-center">
+                  <Link href="/research">
+                    <m.a
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="inline-block px-8 py-3 bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-600 hover:to-teal-500 rounded-full font-semibold text-white shadow-lg transition-all duration-300 text-sm"
+                      data-cursor-text="Explore"
+                    >
+                      Explore My Research
+                    </m.a>
+                  </Link>
                 </div>
-              </div>
+              </m.div>
             </div>
           </div>
         </div>

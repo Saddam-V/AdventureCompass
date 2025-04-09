@@ -105,7 +105,7 @@ const CallToAction = () => {
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                Interested in <span className="text-gradient bg-gradient-to-r from-teal-400 to-purple-500 bg-clip-text text-transparent">Collaboration</span>?
+                Interested in <span className="bg-gradient-to-r from-teal-400 to-purple-500 bg-clip-text text-transparent">Collaboration</span>?
               </m.h2>
               
               <m.p 
@@ -150,15 +150,7 @@ const CallToAction = () => {
           </div>
         </m.div>
       </div>
-      
-      {/* Add a style block for the text gradient */}
-      <style jsx>{`
-        .text-gradient {
-          background-clip: text;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-      `}</style>
+
     </section>
   );
 };
