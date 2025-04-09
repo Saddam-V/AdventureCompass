@@ -2,6 +2,48 @@ import { useEffect } from "react";
 import { m, useAnimation } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
+interface TimelineItemProps {
+  year: string;
+  title: string;
+  institution: string;
+  description: string;
+  alignment: "left" | "right";
+  delay: number;
+}
+
+const TimelineItem = ({ year, title, institution, description, alignment, delay }: TimelineItemProps) => {
+  const [itemRef, itemInView] = useScrollAnimation(0.1);
+
+  const containerClasses = alignment === "left" 
+    ? "flex-row-reverse md:pr-12 text-right"
+    : "md:pl-12 text-left";
+
+  return (
+    <m.div 
+      ref={itemRef}
+      initial={{ opacity: 0, y: 25, x: alignment === "left" ? 50 : -50 }}
+      animate={itemInView ? { opacity: 1, y: 0, x: 0 } : { opacity: 0, y: 25, x: alignment === "left" ? 50 : -50 }}
+      transition={{ duration: 0.7, delay, ease: "easeOut" }}
+      className={`flex items-center ${containerClasses}`}
+    >
+      <div className={`w-full md:w-1/2 space-y-3 ${alignment === "right" ? "text-left" : "text-right"}`}>
+        <div 
+          className={`inline-block py-1 px-4 rounded-full bg-primary text-white font-montserrat text-sm font-semibold transform hover:scale-105 transition-transform`}
+        >
+          {year}
+        </div>
+        <h3 className="font-playfair text-2xl font-bold">{title}</h3>
+        <p className="text-accent font-semibold">{institution}</p>
+        <p className="text-gray-700">{description}</p>
+      </div>
+      
+      <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6">
+        <div className="w-6 h-6 rounded-full bg-accent border-4 border-white shadow transition-transform duration-300 transform hover:scale-150"></div>
+      </div>
+    </m.div>
+  );
+};
+
 const pageVariants = {
   initial: {
     opacity: 0,
@@ -27,7 +69,7 @@ const itemVariants = {
   enter: { 
     y: 0, 
     opacity: 1,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
+    transition: { duration: 0.6, ease: "easeOut" }
   },
 };
 
@@ -98,14 +140,14 @@ const About = () => {
             </m.div>
             
             <m.div variants={itemVariants} className="space-y-4 text-gray-700 mb-10">
-              <p>
-                I am a philosopher with a specialization in epistemology, philosophy of mind, and artificial intelligence. My research investigates the nature of knowledge, rationality, and intelligence.
+              <p className="first-letter:text-4xl first-letter:font-bold first-letter:mr-1 first-letter:text-accent first-letter:float-left">
+                I am a Professor of Philosophy at Princeton University, specializing in philosophy of mind, cognitive science, and epistemology. My work bridges traditional philosophical questions with contemporary scientific research on consciousness, artificial intelligence, and human reasoning.
               </p>
               <p>
-                Currently serving as a faculty member at the Department of Philosophy, University of California, I combine my academic research with practical applications in the field of AI ethics and cognitive science.
+                My research program investigates what I call "hybrid cognition"—how human understanding emerges from the interplay between formal reasoning, embodied experience, and technological extension. I am particularly interested in how AI systems both illuminate and transform our understanding of human thought.
               </p>
               <p>
-                With over 15 years of experience in academia, I've published numerous papers in leading journals and presented my work at international conferences.
+                I've authored four books and over thirty scholarly articles exploring the boundaries of mind, knowledge, and technology. My latest book, <em className="text-accent">The Extended Mind Revisited</em> (Oxford University Press, 2022), examines how digital technologies are reshaping human cognitive capacities.
               </p>
             </m.div>
             
@@ -131,6 +173,75 @@ const About = () => {
               </svg>
             </m.a>
           </m.div>
+        </div>
+      </div>
+      
+      <div className="container mx-auto px-6 mt-32">
+        <m.div 
+          ref={ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center mb-16"
+        >
+          <h2 className="font-playfair text-4xl font-bold mb-4 inline-block">
+            Academic Journey
+            <div className="h-1 w-full bg-accent mt-2"></div>
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">Exploring the evolution of my research and career over the years</p>
+        </m.div>
+        
+        <div className="relative">
+          {/* Vertical Line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-secondary via-accent to-secondary"></div>
+          
+          {/* Timeline items */}
+          <div className="space-y-24 relative">
+            <TimelineItem 
+              year="2005" 
+              title="Doctoral Degree" 
+              institution="Oxford University"
+              description="Completed Ph.D. in Philosophy with dissertation on 'Consciousness and Cognitive Integration'"
+              alignment="right"
+              delay={0.1}
+            />
+            
+            <TimelineItem 
+              year="2008" 
+              title="Assistant Professor" 
+              institution="Columbia University"
+              description="Began teaching philosophy of mind and cognitive science courses while developing early research on extended cognition"
+              alignment="left"
+              delay={0.3}
+            />
+            
+            <TimelineItem 
+              year="2013" 
+              title="Associate Professor" 
+              institution="University of California"
+              description="Expanded research program to include artificial intelligence and computational models of cognition"
+              alignment="right"
+              delay={0.5}
+            />
+            
+            <TimelineItem 
+              year="2017" 
+              title="AI Ethics Research Chair" 
+              institution="Princeton University"
+              description="Led interdisciplinary research team exploring ethical dimensions of artificial intelligence and machine learning"
+              alignment="left"
+              delay={0.7}
+            />
+            
+            <TimelineItem 
+              year="2021" 
+              title="Full Professor" 
+              institution="Princeton University"
+              description="Published landmark work on hybrid cognition and continued cross-disciplinary collaborations in cognitive science"
+              alignment="right"
+              delay={0.9}
+            />
+          </div>
         </div>
       </div>
       

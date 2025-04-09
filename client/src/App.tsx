@@ -10,6 +10,7 @@ import Publications from "@/pages/Publications";
 import Contact from "@/pages/Contact";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
 import { AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
@@ -48,6 +49,7 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <CustomCursor />
       <Router />
       <Toaster />
     </QueryClientProvider>
