@@ -35,8 +35,18 @@ const Navigation = () => {
   return (
     <nav 
       className={`fixed w-full top-0 z-50 px-4 py-3 transition-all duration-500 ${
-        isScrolled ? "bg-primary bg-opacity-95 shadow-lg" : "bg-transparent"
+        isScrolled 
+          ? "bg-slate-900 bg-opacity-95 shadow-lg backdrop-blur-sm" 
+          : location === "/" 
+            ? "bg-transparent" 
+            : "bg-slate-900 bg-opacity-90 backdrop-blur-sm"
       }`}
+      style={{
+        borderBottom: isScrolled ? '1px solid transparent' : 'none',
+        borderImage: isScrolled 
+          ? 'linear-gradient(to right, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3)) 1' 
+          : 'none'
+      }}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link href="/" className="text-xl font-playfair font-bold transition-colors duration-300">
@@ -86,7 +96,7 @@ const Navigation = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden absolute top-full left-0 w-full bg-primary bg-opacity-95 backdrop-filter backdrop-blur-sm py-6 px-4"
+            className="md:hidden absolute top-full left-0 w-full bg-slate-900 bg-opacity-95 backdrop-blur-sm shadow-xl border-t border-slate-800/50 py-6 px-4"
           >
             <div className="flex flex-col space-y-6 items-center">
               {navItems.map((item) => (
