@@ -47,7 +47,13 @@ const QuotesShowcase = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
   
   return (
-    <section ref={containerRef} className="py-28 relative bg-gradient-to-b from-primary-dark to-primary overflow-hidden">
+    <section ref={containerRef} className="py-28 relative bg-gradient-to-b from-slate-900 to-indigo-950 overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM0ZjQ2ZTUiIGZpbGwtb3BhY2l0eT0iMC4wMjUiPjxwYXRoIGQ9Ik0zNiAzNGMwLTIuMjA5LTEuNzkxLTQtNC00cy00IDEuNzkxLTQgNCAxLjc5MSA0IDQgNCA0LTEuNzkxIDQtNHptLTIgMGMwLTEuMTA1LS44OTUtMi0yLTJzLTIgLjg5NS0yIDIgLjg5NSAyIDIgMiAyLS44OTUgMi0yem0zMiAxNmMwLTIuMjA5LTEuNzkxLTQtNC00cy00IDEuNzkxLTQgNCAxLjc5MSA0IDQgNCA0LTEuNzkxIDQtNHptLTIgMGMwLTEuMTA1LS44OTUtMi0yLTJzLTIgLjg5NS0yIDIgLjg5NSAyIDIgMiAyLS44OTUgMi0yem0tMzIgMGMwLTIuMjA5LTEuNzkxLTQtNC00cy00IDEuNzkxLTQgNCAxLjc5MSA0IDQgNCA0LTEuNzkxIDQtNHptLTIgMGMwLTEuMTA1LS44OTUtMi0yLTJzLTIgLjg5NS0yIDIgLjg5NSAyIDIgMiAyLS44OTUgMi0yem0wLTE2YzAtMi4yMDktMS43OTEtNC00LTRzLTQgMS43OTEtNCA0IDEuNzkxIDQgNCA0IDQtMS43OTEgNC00em0tMiAwYzAtMS4xMDUtLjg5NS0yLTItMnMtMiAuODk1LTIgMiAuODk1IDIgMiAyIDItLjg5NSAyLTJ6bTMyLTE2YzAtMi4yMDktMS43OTEtNC00LTRzLTQgMS43OTEtNCA0IDEuNzkxIDQgNCA0IDQtMS43OTEgNC00em0tMiAwYzAtMS4xMDUtLjg5NS0yLTItMnMtMiAuODk1LTIgMiAuODk1IDIgMiAyIDItLjg5NSAyLTJ6bS0xNi0xNmMwLTIuMjA5LTEuNzkxLTQtNC00cy00IDEuNzkxLTQgNCAxLjc5MSA0IDQgNCA0LTEuNzkxIDQtNHptLTIgMGMwLTEuMTA1LS44OTUtMi0yLTJzLTIgLjg5NS0yIDIgLjg5NSAyIDIgMiAyLS44OTUgMi0yem0tMTYtMTZjMC0yLjIwOS0xLjc5MS00LTQtNHMtNCAxLjc5MS00IDQgMS43OTEgNCA0IDQgNC0xLjc5MSA0LTR6bS0yIDBjMC0xLjEwNS0uODk1LTItMi0ycy0yIC44OTUtMiAyIC44OTUgMiAyIDIgMi0uODk1IDItMnptMzIgMGMwLTIuMjA5LTEuNzkxLTQtNC00cy00IDEuNzkxLTQgNCAxLjc5MSA0IDQgNCA0LTEuNzkxIDQtNHptLTIgMGMwLTEuMTA1LS44OTUtMi0yLTJzLTIgLjg5NS0yIDIgLjg5NSAyIDIgMiAyLS44OTUgMi0yeiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+')]"></div>
+      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-purple-600/10 to-transparent pointer-events-none"></div>
+      <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-teal-500/20 blur-3xl"></div>
+      <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-indigo-600/20 blur-3xl"></div>
+      
       <div className="container mx-auto px-6 relative z-10">
         <m.div
           ref={titleRef}
@@ -57,7 +63,7 @@ const QuotesShowcase = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white font-playfair mb-6">
-            What Others <span className="text-accent">Say</span>
+            What Others <span className="text-teal-400">Say</span>
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Perspectives on my research from colleagues and publications in the field
@@ -90,24 +96,6 @@ const QuotesShowcase = () => {
           </m.div>
         </m.div>
       </div>
-      
-      {/* Background decoration */}
-      <div className="absolute inset-0 z-0 opacity-30">
-        <svg className="absolute left-0 top-0 h-full w-full" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <defs>
-            <radialGradient id="quote-radial1" cx="0" cy="0" r="100%" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#4f46e5" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#4f46e5" stopOpacity="0" />
-            </radialGradient>
-            <radialGradient id="quote-radial2" cx="100%" cy="100%" r="100%" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#f472b6" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#f472b6" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-          <rect x="0" y="0" width="100%" height="100%" fill="url(#quote-radial1)" />
-          <rect x="0" y="0" width="100%" height="100%" fill="url(#quote-radial2)" />
-        </svg>
-      </div>
     </section>
   );
 };
@@ -126,10 +114,10 @@ const QuoteCard = ({ quote, delay }: QuoteCardProps) => {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.7, delay, ease: "easeOut" }}
-      className="bg-white/10 backdrop-blur-md rounded-xl p-8 shadow-lg border border-white/10"
+      className="bg-gradient-to-br from-slate-800/80 to-indigo-900/80 backdrop-blur-md rounded-xl p-8 shadow-xl border border-slate-700/50"
     >
       <svg
-        className="text-accent h-8 w-8 mb-4 opacity-80"
+        className="text-teal-400 h-8 w-8 mb-4"
         fill="currentColor"
         viewBox="0 0 32 32"
         aria-hidden="true"
@@ -142,14 +130,14 @@ const QuoteCard = ({ quote, delay }: QuoteCardProps) => {
       </p>
       
       <div className="flex items-center">
-        <div className="h-10 w-10 rounded-full bg-accent/30 flex items-center justify-center text-accent font-bold">
+        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-teal-500/30 to-purple-600/30 flex items-center justify-center text-white font-bold">
           {quote.author.charAt(0)}
         </div>
         <div className="ml-4">
           <h4 className="text-white font-semibold">{quote.author}</h4>
           <p className="text-gray-300 text-sm">{quote.role}</p>
           {quote.source && (
-            <p className="text-accent text-xs mt-1">{quote.source}</p>
+            <p className="text-purple-400 text-xs mt-1">{quote.source}</p>
           )}
         </div>
       </div>

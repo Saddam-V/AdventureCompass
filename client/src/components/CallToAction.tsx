@@ -37,7 +37,7 @@ const CallToAction = () => {
   };
   
   return (
-    <section className="py-20 bg-neutral overflow-hidden">
+    <section className="py-20 bg-gradient-to-b from-indigo-950 to-slate-900 overflow-hidden">
       <div className="container mx-auto px-6">
         <m.div
           ref={ref}
@@ -50,27 +50,38 @@ const CallToAction = () => {
             onMouseMove={handleMouseMove}
             className="relative rounded-2xl overflow-hidden"
           >
+            {/* Background gradient */}
             <m.div 
-              className="absolute inset-0 bg-gradient-to-r from-primary-dark to-primary"
+              className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
             />
             
+            {/* Background pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <svg className="w-full h-full" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="white" strokeWidth="0.5" />
+                </pattern>
+                <rect x="0" y="0" width="100%" height="100%" fill="url(#grid-pattern)" />
+              </svg>
+            </div>
+            
             {/* Spotlight effect */}
             <m.div 
               className="absolute inset-0 opacity-30 pointer-events-none" 
               style={{
-                background: 'radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 50%)',
+                background: 'radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 70%)',
                 backgroundPosition: `${spotlightX.get()}% ${spotlightY.get()}%`,
-                backgroundSize: '100% 100%',
+                backgroundSize: '120% 120%',
               }}
             />
             
             {/* Animated shapes */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <m.div
-                className="absolute w-64 h-64 rounded-full bg-accent/20 blur-3xl"
+                className="absolute w-64 h-64 rounded-full bg-teal-500/20 blur-3xl"
                 animate={{
                   x: [mousePosition.x * 0.2 - 100, mousePosition.x * 0.2 - 100],
                   y: [mousePosition.y * 0.2 - 100, mousePosition.y * 0.2 - 100],
@@ -78,7 +89,7 @@ const CallToAction = () => {
                 transition={{ duration: 0.8 }}
               />
               <m.div
-                className="absolute w-64 h-64 rounded-full bg-secondary/20 blur-3xl"
+                className="absolute w-64 h-64 rounded-full bg-purple-600/20 blur-3xl"
                 animate={{
                   x: [mousePosition.x * 0.1 + 200, mousePosition.x * 0.1 + 200],
                   y: [mousePosition.y * 0.1 + 100, mousePosition.y * 0.1 + 100],
@@ -89,12 +100,12 @@ const CallToAction = () => {
             
             <div className="relative z-10 py-24 px-12 text-center">
               <m.h2 
-                className="text-4xl md:text-5xl font-bold text-white font-playfair mb-6"
+                className="text-4xl md:text-5xl font-bold text-white font-playfair mb-6 tracking-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                Interested in <span className="text-accent">Collaboration</span>?
+                Interested in <span className="text-gradient bg-gradient-to-r from-teal-400 to-purple-500 bg-clip-text text-transparent">Collaboration</span>?
               </m.h2>
               
               <m.p 
@@ -117,7 +128,7 @@ const CallToAction = () => {
                   <m.a
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="inline-block px-8 py-4 bg-accent hover:bg-accent/90 text-white font-semibold rounded-full transition-all shadow-lg hover:shadow-xl magnetic"
+                    className="inline-block px-8 py-4 bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-600 hover:to-teal-500 text-white font-semibold rounded-full transition-all shadow-lg hover:shadow-xl magnetic"
                     data-cursor-text="Get in Touch"
                   >
                     Contact Me
@@ -128,7 +139,7 @@ const CallToAction = () => {
                   <m.a
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="inline-block px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white/10 font-semibold rounded-full transition-all shadow-lg hover:shadow-xl magnetic"
+                    className="inline-block px-8 py-4 bg-transparent border-2 border-purple-400 text-purple-400 hover:bg-purple-400/10 font-semibold rounded-full transition-all shadow-lg hover:shadow-xl magnetic"
                     data-cursor-text="View Research"
                   >
                     View My Research
@@ -139,6 +150,15 @@ const CallToAction = () => {
           </div>
         </m.div>
       </div>
+      
+      {/* Add a style block for the text gradient */}
+      <style jsx>{`
+        .text-gradient {
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      `}</style>
     </section>
   );
 };

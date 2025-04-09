@@ -94,8 +94,13 @@ const FeaturesSection = () => {
   const [ref, inView] = useScrollAnimation(0.1);
   
   return (
-    <section className="py-24 relative overflow-hidden bg-gradient-to-b from-primary to-primary-dark">
-      <div className="container mx-auto px-6">
+    <section className="py-24 relative overflow-hidden bg-gradient-to-b from-indigo-950 to-slate-900">
+      {/* Decorative elements */}
+      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-teal-500/10 to-transparent"></div>
+      <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-purple-600/20 blur-3xl"></div>
+      <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-cyan-600/20 blur-3xl"></div>
+      
+      <div className="container mx-auto px-6 relative z-10">
         <m.div 
           ref={ref}
           initial={{ opacity: 0, y: 30 }}
@@ -104,7 +109,7 @@ const FeaturesSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white font-playfair mb-6">
-            My Research <span className="text-accent">Expertise</span>
+            My Research <span className="text-teal-400">Expertise</span>
           </h2>
           <p className="text-lg text-gray-300 max-w-3xl mx-auto">
             Exploring the boundaries between philosophy, cognition, and emerging technologies
@@ -113,70 +118,85 @@ const FeaturesSection = () => {
         </m.div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <m.div
-              key={feature.id}
-              variants={cardVariants}
-              initial="hidden"
-              animate={inView ? "show" : "hidden"}
-              transition={{ delay: index * 0.1 }}
-              className="h-[300px]"
-              onMouseEnter={() => setHoveredId(feature.id)}
-              onMouseLeave={() => setHoveredId(null)}
-            >
-              <FloatingCard3D 
-                className="h-full w-full" 
-                backgroundColor="#1c1c35"
-                glareColor={feature.color}
-                shadowIntensity={0.8}
+          {features.map((feature, index) => {
+            // Updated feature colors for better cohesion
+            const updatedColors = {
+              "#4f46e5": "#6366f1", // indigo
+              "#ec4899": "#d946ef", // fuchsia
+              "#10b981": "#14b8a6", // teal
+              "#f59e0b": "#f59e0b", // amber
+              "#8b5cf6": "#8b5cf6", // violet
+              "#ef4444": "#f43f5e", // rose
+            };
+            
+            const colorKey = feature.color as keyof typeof updatedColors;
+            const updatedColor = updatedColors[colorKey] || feature.color;
+            
+            return (
+              <m.div
+                key={feature.id}
+                variants={cardVariants}
+                initial="hidden"
+                animate={inView ? "show" : "hidden"}
+                transition={{ delay: index * 0.1 }}
+                className="h-[320px]"
+                onMouseEnter={() => setHoveredId(feature.id)}
+                onMouseLeave={() => setHoveredId(null)}
               >
-                <div className="p-8 h-full flex flex-col">
-                  <div 
-                    className="p-4 rounded-full w-fit mb-4" 
-                    style={{ backgroundColor: `${feature.color}20` }}
-                  >
-                    <div className="text-white" style={{ color: feature.color }}>
-                      {feature.icon}
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3 font-montserrat">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-300 flex-grow mb-4">
-                    {feature.description}
-                  </p>
-                  <m.button
-                    className="text-sm font-medium group flex items-center space-x-1 text-white w-fit"
-                    whileHover={{ x: 5 }}
-                    style={{ color: feature.color }}
-                    data-cursor-text="Learn More"
-                  >
-                    <span>Learn more</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 transform transition-transform group-hover:translate-x-1"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                <FloatingCard3D 
+                  className="h-full w-full" 
+                  backgroundColor="rgba(15, 23, 42, 0.7)"
+                  glareColor={updatedColor}
+                  shadowIntensity={0.8}
+                  borderRadius="1rem"
+                >
+                  <div className="p-8 h-full flex flex-col bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-[inherit] border border-slate-700/30">
+                    <div 
+                      className="p-4 rounded-full w-fit mb-4 flex items-center justify-center" 
+                      style={{ 
+                        background: `linear-gradient(135deg, ${updatedColor}40, ${updatedColor}10)`,
+                        boxShadow: `0 0 20px ${updatedColor}30`
+                      }}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </m.button>
-                </div>
-              </FloatingCard3D>
-            </m.div>
-          ))}
+                      <div style={{ color: updatedColor }}>
+                        {feature.icon}
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-3 font-montserrat">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-300 flex-grow mb-4">
+                      {feature.description}
+                    </p>
+                    <m.button
+                      className="text-sm font-medium group flex items-center space-x-1 w-fit"
+                      whileHover={{ x: 5 }}
+                      style={{ color: updatedColor }}
+                      data-cursor-text="Learn More"
+                    >
+                      <span>Learn more</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 transform transition-transform group-hover:translate-x-1"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </m.button>
+                  </div>
+                </FloatingCard3D>
+              </m.div>
+            );
+          })}
         </div>
       </div>
-      
-      {/* Decorative background elements */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-accent opacity-5 blur-3xl"></div>
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-secondary opacity-5 blur-3xl"></div>
     </section>
   );
 };
