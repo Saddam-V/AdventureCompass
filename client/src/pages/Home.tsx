@@ -7,7 +7,7 @@ import StatsSection from "@/components/StatsSection";
 import CallToAction from "@/components/CallToAction";
 import Interactive3DText from "@/components/Interactive3DText";
 import InteractiveParticles from "@/components/InteractiveParticles";
-import BrainModel3D from "@/components/BrainModel3D";
+import AtomicModel3D from "@/components/AtomicModel3D";
 import { Link } from "wouter";
 
 const pageVariants = {
@@ -125,20 +125,20 @@ const Home = () => {
                   )}
                 </div>
                 
-                {/* Interactive 3D Brain Model */}
-                <BrainModel3D className="h-full" />
+                {/* Interactive 3D Atomic Model */}
+                <AtomicModel3D className="h-full" />
                 
                 {/* Caption */}
                 <div className="absolute bottom-4 left-0 right-0 text-center">
                   <Link href="/research">
-                    <m.a
+                    <m.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="inline-block px-8 py-3 bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-600 hover:to-teal-500 rounded-full font-semibold text-white shadow-lg transition-all duration-300 text-sm"
                       data-cursor-text="Explore"
                     >
                       Explore My Research
-                    </m.a>
+                    </m.button>
                   </Link>
                 </div>
               </m.div>

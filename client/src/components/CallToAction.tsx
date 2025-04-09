@@ -125,25 +125,25 @@ const CallToAction = () => {
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
                 <Link href="/contact">
-                  <m.a
+                  <m.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="inline-block px-8 py-4 bg-gradient-to-r from-teal-500 to-teal-400 hover:from-teal-600 hover:to-teal-500 text-white font-semibold rounded-full transition-all shadow-lg hover:shadow-xl magnetic"
                     data-cursor-text="Get in Touch"
                   >
                     Contact Me
-                  </m.a>
+                  </m.button>
                 </Link>
                 
                 <Link href="/publications">
-                  <m.a
+                  <m.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="inline-block px-8 py-4 bg-transparent border-2 border-purple-400 text-purple-400 hover:bg-purple-400/10 font-semibold rounded-full transition-all shadow-lg hover:shadow-xl magnetic"
                     data-cursor-text="View Research"
                   >
                     View My Research
-                  </m.a>
+                  </m.button>
                 </Link>
               </m.div>
             </div>

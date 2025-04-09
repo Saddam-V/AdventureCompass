@@ -154,6 +154,9 @@ const CustomCursor = () => {
     const onMouseEnter = () => setHidden(false);
     const onMouseLeave = () => setHidden(true);
     
+    // Hide cursor initially until we get a mouse move
+    setHidden(true);
+    
     // Set up magnetic elements, update on scroll and resize
     setupMagneticElements();
     
@@ -161,7 +164,38 @@ const CustomCursor = () => {
       requestAnimationFrame(setupMagneticElements);
     };
     
-    document.addEventListener("mousemove", onMouseMove);
+    // Handle mouse move - delayed initialization for smoother start
+    let initialMoveDetected = false;
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!initialMoveDetected) {
+        initialMoveDetected = true;
+        setHidden(false);
+        
+        // Initialize at current position to avoid "jump from corner" issue
+        if (dotRef.current && ringRef.current) {
+          const x = e.clientX;
+          const y = e.clientY;
+          
+          // Initialize both the visual position and the reference position
+          setPosition({ x, y });
+          positionRef.current = { x, y };
+          
+          dotRef.current.style.left = `${x}px`;
+          dotRef.current.style.top = `${y}px`;
+          ringRef.current.style.left = `${x}px`;
+          ringRef.current.style.top = `${y}px`;
+          
+          // Only start animation after initial position is set
+          startAnimation();
+        }
+      }
+      
+      // Regular mouse move handling  
+      onMouseMove(e);
+    };
+    
+    // Add all event listeners
+    document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseenter", onMouseEnter);
     document.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("mousedown", onMouseDown);
@@ -175,50 +209,34 @@ const CustomCursor = () => {
     window.addEventListener("scroll", refreshMagneticElements);
     window.addEventListener("resize", refreshMagneticElements);
     
-    // Set initial cursor position
-    if (dotRef.current && ringRef.current) {
-      dotRef.current.style.left = '0px';
-      dotRef.current.style.top = '0px';
-      ringRef.current.style.left = '0px';
-      ringRef.current.style.top = '0px';
-    }
-    
-    // Start animation loop
-    startAnimation();
-    
-    // Custom cursor effect for hoverable elements
-    const handleLinkHoverEvents = () => {
-      document.querySelectorAll("a, button, [role=button], .clickable").forEach(el => {
-        el.addEventListener("mouseenter", () => {
-          setLinkHovered(true);
-          setHoveredElement(el);
-          const text = el.getAttribute('data-cursor-text');
-          if (text) setCursorText(text);
-        });
-        
-        el.addEventListener("mouseleave", () => {
-          setLinkHovered(false);
-          setHoveredElement(null);
-          setCursorText("");
-        });
+    // Use a more reliable way to detect link hovers
+    const handleLinkHoverDetection = () => {
+      // Use MutationObserver to detect DOM changes and update magnetic elements
+      const observer = new MutationObserver((mutations) => {
+        refreshMagneticElements();
       });
+      
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: false,
+        characterData: false
+      });
+      
+      return observer;
     };
     
-    handleLinkHoverEvents();
+    const observer = handleLinkHoverDetection();
     
     // Cleanup all event listeners
     return () => {
       stopAnimation();
-      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseenter", onMouseEnter);
       document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mousedown", onMouseDown);
       document.removeEventListener("mouseup", onMouseUp);
-      document.removeEventListener("touchstart", () => {
-        if (window.matchMedia('(max-width: 768px)').matches) {
-          setHidden(true);
-        }
-      });
+      observer.disconnect();
       window.removeEventListener("scroll", refreshMagneticElements);
       window.removeEventListener("resize", refreshMagneticElements);
     };
@@ -251,12 +269,12 @@ const CustomCursor = () => {
         )}
       </div>
       <style>{`
-        body {
-          cursor: none;
+        html, body {
+          cursor: none !important;
         }
         
-        a, button, [role=button], .clickable {
-          cursor: none;
+        a, button, [role=button], .clickable, .magnetic {
+          cursor: none !important;
         }
         
         .custom-cursor-dot {
@@ -270,7 +288,8 @@ const CustomCursor = () => {
           border-radius: 50%;
           transform: translate(-50%, -50%);
           z-index: 9999;
-          transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+          will-change: transform, opacity;
+          transition: opacity 0.15s ease-in-out, background-color 0.15s ease-in-out;
         }
         
         .custom-cursor-ring {
@@ -284,32 +303,32 @@ const CustomCursor = () => {
           border-radius: 50%;
           transform: translate(-50%, -50%);
           z-index: 9998;
+          will-change: width, height, border, opacity;
           transition: width 0.2s, height 0.2s, border 0.2s, opacity 0.2s ease;
+          backdrop-filter: blur(1px);
         }
         
         .custom-cursor-dot.clicked {
-          transform: translate(-50%, -50%) scale(0.8);
-          background-color: var(--accent);
+          background-color: #14b8a6;
         }
         
         .custom-cursor-ring.clicked {
           width: 32px;
           height: 32px;
           border-width: 3px;
-          border-color: var(--accent);
+          border-color: #14b8a6;
         }
         
         .custom-cursor-dot.link-hovered {
-          background-color: var(--accent);
-          transform: translate(-50%, -50%) scale(1.5);
+          background-color: #14b8a6;
         }
         
         .custom-cursor-ring.link-hovered {
-          width: 60px;
-          height: 60px;
-          border-color: var(--accent);
+          width: 50px;
+          height: 50px;
+          border-color: #14b8a6;
           border-width: 2px;
-          opacity: 0.3;
+          opacity: 0.5;
         }
         
         .custom-cursor-dot.hidden,
@@ -326,11 +345,13 @@ const CustomCursor = () => {
           font-size: 12px;
           font-weight: bold;
           color: white;
-          background-color: var(--accent);
+          background-color: #14b8a6;
           padding: 4px 8px;
           border-radius: 4px;
           opacity: 0;
-          transition: opacity 0.3s ease;
+          transition: opacity 0.2s ease;
+          pointer-events: none;
+          will-change: opacity;
         }
         
         .custom-cursor-ring.link-hovered .custom-cursor-text {
@@ -344,12 +365,12 @@ const CustomCursor = () => {
             display: none;
           }
           
-          body {
-            cursor: auto;
+          html, body {
+            cursor: auto !important;
           }
           
           a, button, [role=button], .clickable, .magnetic {
-            cursor: pointer;
+            cursor: pointer !important;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Remove default mobile tap highlight */
             position: relative; /* For positioning the tooltip */
           }
@@ -367,7 +388,7 @@ const CustomCursor = () => {
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%) translateY(5px);
-            background-color: var(--accent);
+            background-color: #14b8a6;
             color: white;
             font-size: 12px;
             padding: 4px 8px;
