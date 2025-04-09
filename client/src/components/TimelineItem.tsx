@@ -27,17 +27,17 @@ const TimelineItem = ({ year, title, institution, description, alignment, delay 
     >
       <div className={`w-full md:w-1/2 space-y-3 ${alignment === "right" ? "text-left" : "text-right"}`}>
         <div 
-          className={`inline-block py-1 px-4 rounded-full bg-primary text-white font-montserrat text-sm font-semibold transform hover:scale-105 transition-transform`}
+          className={`inline-block py-1 px-4 rounded-full bg-secondary/90 text-white font-montserrat text-sm font-semibold transform hover:scale-105 transition-transform`}
         >
           {year}
         </div>
-        <h3 className="font-playfair text-2xl font-bold">{title}</h3>
+        <h3 className="font-playfair text-2xl font-bold text-foreground">{title}</h3>
         <p className="text-accent font-semibold">{institution}</p>
-        <p className="text-gray-700">{description}</p>
+        <p className="text-gray-700 dark:text-gray-300">{description}</p>
       </div>
       
       <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6">
-        <div className="w-6 h-6 rounded-full bg-accent border-4 border-white shadow transition-transform duration-300 transform hover:scale-150"></div>
+        <div className="w-6 h-6 rounded-full bg-accent border-4 border-white dark:border-slate-800 shadow transition-transform duration-300 transform hover:scale-150"></div>
       </div>
     </m.div>
   );

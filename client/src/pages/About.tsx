@@ -49,7 +49,7 @@ const About = () => {
       animate={controls}
       exit="exit"
       variants={pageVariants}
-      className="relative py-20 md:py-32 overflow-hidden bg-neutral"
+      className="relative py-20 md:py-32 overflow-hidden bg-background dark:bg-slate-900"
     >
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
@@ -90,7 +90,7 @@ const About = () => {
           >
             <m.div variants={itemVariants}>
               <h2 className="font-montserrat text-lg text-accent uppercase tracking-widest mb-2">About Me</h2>
-              <h3 className="font-playfair text-4xl md:text-5xl font-bold mb-8 text-primary">
+              <h3 className="font-playfair text-4xl md:text-5xl font-bold mb-8 text-foreground">
                 Philosopher, <br/>
                 <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
                   Scholar & Educator
@@ -98,7 +98,7 @@ const About = () => {
               </h3>
             </m.div>
             
-            <m.div variants={itemVariants} className="space-y-4 text-gray-700 mb-10">
+            <m.div variants={itemVariants} className="space-y-4 text-foreground dark:text-gray-300 mb-10">
               <p className="first-letter:text-4xl first-letter:font-bold first-letter:mr-1 first-letter:text-accent first-letter:float-left">
                 I am a Professor of Philosophy at Princeton University, specializing in philosophy of mind, cognitive science, and epistemology. My work bridges traditional philosophical questions with contemporary scientific research on consciousness, artificial intelligence, and human reasoning.
               </p>
@@ -112,19 +112,19 @@ const About = () => {
             
             <m.div variants={itemVariants} className="grid grid-cols-2 gap-6 mb-8">
               <div className="border-l-4 border-secondary pl-4">
-                <h4 className="font-montserrat font-bold text-lg mb-1">Education</h4>
-                <p className="text-gray-600">Ph.D. in Philosophy<br/>Oxford University</p>
+                <h4 className="font-montserrat font-bold text-lg mb-1 text-foreground">Education</h4>
+                <p className="text-gray-600 dark:text-gray-400">Ph.D. in Philosophy<br/>Oxford University</p>
               </div>
               <div className="border-l-4 border-accent pl-4">
-                <h4 className="font-montserrat font-bold text-lg mb-1">Specialization</h4>
-                <p className="text-gray-600">Epistemology<br/>AI Philosophy</p>
+                <h4 className="font-montserrat font-bold text-lg mb-1 text-foreground">Specialization</h4>
+                <p className="text-gray-600 dark:text-gray-400">Epistemology<br/>AI Philosophy</p>
               </div>
             </m.div>
             
             <m.a 
               href="#research" 
               variants={itemVariants}
-              className="inline-flex items-center font-montserrat font-semibold text-primary group"
+              className="inline-flex items-center font-montserrat font-semibold text-foreground hover:text-accent group"
             >
               <span className="mr-2 group-hover:mr-4 transition-all duration-300">Explore My Research</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-all duration-300 transform group-hover:translate-x-2">
@@ -147,7 +147,7 @@ const About = () => {
             Academic Journey
             <div className="h-1 w-full bg-accent mt-2"></div>
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">Exploring the evolution of my research and career over the years</p>
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Exploring the evolution of my research and career over the years</p>
         </m.div>
         
         <div className="relative">

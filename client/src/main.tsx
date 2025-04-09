@@ -4,9 +4,12 @@ import "./index.css";
 
 // Register required motion features
 import { domAnimation, LazyMotion } from "framer-motion";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 createRoot(document.getElementById("root")!).render(
-  <LazyMotion features={domAnimation}>
-    <App />
-  </LazyMotion>
+  <ThemeProvider defaultTheme="light">
+    <LazyMotion features={domAnimation}>
+      <App />
+    </LazyMotion>
+  </ThemeProvider>
 );
