@@ -5,9 +5,10 @@ import { Link, useLocation } from "wouter";
 const navItems = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
-  { label: "Research", path: "/research" },
+  { label: "Specification", path: "/research" },
   { label: "Publications", path: "/publications" },
   { label: "Contact", path: "/contact" },
+  { label: "Blog", path: "/blog" }, // Added Blog link
 ];
 
 const Navigation = () => {

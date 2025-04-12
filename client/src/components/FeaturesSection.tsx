@@ -14,8 +14,8 @@ interface Feature {
 const features: Feature[] = [
   {
     id: 1,
-    title: "Philosophy of Mind",
-    description: "Exploring the nature of consciousness and how it relates to physical processes in the brain.",
+    title: "GallBladder Stone Surgery in Delhi",
+    description: "Surgical procedure for removing the gallbladder, often performed to treat gallstones or gallbladder-related issues, alleviating pain and ensuring digestive health.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-10 h-10">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
@@ -25,8 +25,8 @@ const features: Feature[] = [
   },
   {
     id: 2,
-    title: "Artificial Intelligence Ethics",
-    description: "Investigating ethical implications of AI and machine learning systems on society and human values.",
+    title: "Hernia Surgery in Delhi",
+    description: "Hernia surgery is a medical procedure performed to correct hernias - a condition where an internal part of the body pushes through a weakness in the muscle or surrounding tissue wall.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-10 h-10">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
@@ -36,8 +36,8 @@ const features: Feature[] = [
   },
   {
     id: 3,
-    title: "Extended Cognition",
-    description: "Examining how technology extends human cognitive capacities beyond the boundaries of our brains.",
+    title: "Appendix Surgery in Delhi",
+    description: "Appendix surgery, medically known as appendectomy, is the surgical removal of the appendix. It's a standard procedure often performed to treat appendicitis, an inflammatory condition of the appendix.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-10 h-10">
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -47,8 +47,8 @@ const features: Feature[] = [
   },
   {
     id: 4,
-    title: "Epistemology",
-    description: "Analyzing the nature of knowledge, justification, and the rationality of belief in contemporary contexts.",
+    title: "Hiatus Hernia Surgery in Delhi",
+    description: "Surgical procedure to repair hiatus hernia, alleviating symptoms like acid reflux and discomfort, and restoring normal digestive function.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-10 h-10">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
@@ -58,8 +58,8 @@ const features: Feature[] = [
   },
   {
     id: 5,
-    title: "Cognitive Science",
-    description: "Bridging philosophy with empirical research on how the mind works through interdisciplinary approaches.",
+    title: "Bariatric Surgery in Delhi",
+    description: "Our minimally invasive hernia repair procedure provides a safe and efficient solution for hernias. Benefit from a faster recovery time and regain your quality of life with this advanced surgical approach.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-10 h-10">
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
@@ -69,8 +69,8 @@ const features: Feature[] = [
   },
   {
     id: 6,
-    title: "Technological Philosophy",
-    description: "Considering how emerging technologies transform fundamental aspects of human experience and society.",
+    title: "Adrenal Gland Removal in Delhi",
+    description: "A surgical procedure to treat conditions such as tumours or hormone overproduction in the adrenal glands, helping to restore hormonal balance and alleviate associated health concerns.",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="w-10 h-10">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />

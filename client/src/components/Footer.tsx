@@ -2,7 +2,7 @@ import { Link } from "wouter";
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-white py-12">
+    <footer className="bg-black text-white py-12">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
@@ -69,7 +69,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-white/10 mt-10 pt-10 text-center text-gray-500 text-sm">
-          <p>Website designed with inspiration from <a href="https://www.neoculturalcouture.com/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Neo Cultural Couture</a> and <a href="https://artpill.studio/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">Artpill Studio</a>.</p>
+          <p>Website designed and developed proudly by <a href="https://www.assignova.com/" className="text-accent hover:underline" target="_blank" rel="noopener noreferrer">AssigNova</a>.</p>
         </div>
       </div>
     </footer>

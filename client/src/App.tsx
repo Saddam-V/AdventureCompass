@@ -8,6 +8,7 @@ import About from "@/pages/About";
 import Research from "@/pages/Research";
 import Publications from "@/pages/Publications";
 import Contact from "@/pages/Contact";
+import Blog from "@/pages/Blog"; // Import Blog page
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
@@ -26,11 +27,13 @@ function Router() {
           {location === '/research' && <Research key="research" />}
           {location === '/publications' && <Publications key="publications" />}
           {location === '/contact' && <Contact key="contact" />}
+          {location === '/blog' && <Blog key="blog" />} {/* Add Blog route */}
           {location !== '/' && 
            location !== '/about' && 
            location !== '/research' && 
            location !== '/publications' && 
-           location !== '/contact' && <NotFound key="not-found" />}
+           location !== '/contact' && 
+           location !== '/blog' && <NotFound key="not-found" />} {/* Update NotFound condition */}
         </AnimatePresence>
       </main>
       <Footer />
